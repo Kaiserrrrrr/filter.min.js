@@ -9,8 +9,11 @@
 })(typeof self !== "undefined" ? self : this, function () {
 
   function filterText(input) {
+    // Step 0: Remove zero-width / invisible characters
+    let text = input.replace(/[\u200B-\u200D\uFEFF]/g, "");
+
     // Step 1: Unicode normalize + strip diacritics
-    let text = input
+    text = text
       .normalize("NFKD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
@@ -34,7 +37,7 @@
       text = text.replace(regex, replacement);
     }
 
-    // Step 3: Single-character leetspeak + homoglyphs (safe subset)
+    // Step 3: Single-character leetspeak + homoglyphs
     const charMap = {
       "0": "o", "1": "i", "!": "i", "|": "i", "3": "e",
       "4": "a", "@": "a", "5": "s", "$": "s", "7": "t",
@@ -68,8 +71,8 @@
       text = text.replace(regex, replacement);
     }
 
-    // Step 5: Strip anything not ASCII
-    text = text.replace(/[^\x00-\x7F]/g, "");
+    // Step 5: Remove all non-ASCII letters/numbers
+    text = text.replace(/[^a-z0-9]/g, "");
 
     return text;
   }
