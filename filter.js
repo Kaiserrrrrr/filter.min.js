@@ -59,7 +59,7 @@
     };
     text = text.replace(/./g, ch => charMap[ch] || ch);
 
-    // Step 4: Phonetic equivalents (high-confidence only)
+    // Step 4: Phonetic equivalents
     const phoneticMap = {
       "ph": "f",
       "ck": "k",
